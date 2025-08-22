@@ -1,0 +1,187 @@
+*theme-hub.txt*         For Neovim >= 0.7.0        Last change: 2025 August 22
+
+==============================================================================
+Table of Contents                                *theme-hub-table-of-contents*
+
+1. ThemeHub.nvim                                     |theme-hub-themehub.nvim|
+  - Features                                |theme-hub-themehub.nvim-features|
+  - Installation                        |theme-hub-themehub.nvim-installation|
+  - Usage                                      |theme-hub-themehub.nvim-usage|
+  - Configuration                      |theme-hub-themehub.nvim-configuration|
+  - Available Themes                |theme-hub-themehub.nvim-available-themes|
+  - Requirements                        |theme-hub-themehub.nvim-requirements|
+  - Other                                      |theme-hub-themehub.nvim-other|
+  - Similar Projects                |theme-hub-themehub.nvim-similar-projects|
+  - Contribute                            |theme-hub-themehub.nvim-contribute|
+2. Links                                                     |theme-hub-links|
+
+==============================================================================
+1. ThemeHub.nvim                                     *theme-hub-themehub.nvim*
+
+A Neovim plugin to quickly try out different themes. Browse, install, and apply
+colorschemes from a curated list.
+
+
+FEATURES                                    *theme-hub-themehub.nvim-features*
+
+- **Curated Collection**70+ most popular themes for neovim
+- **One-Click Installation**Automatically clone and set up themes from GitHub
+- **Telescope Pickers Integration**Works seamlessly with telescope.nvim, fzf-lua, snacks.picker, mini.pick, and more
+- **Persistent Themes**Remember your theme across Neovim sessions
+- **Variants support**Supports all variants of a theme
+- **Instantly apply**Applies themes directly after installation
+- **Easy Management**Install, uninstall, and manage themes with simple commands
+
+
+INSTALLATION                            *theme-hub-themehub.nvim-installation*
+
+
+USING LAZY.NVIM ~
+
+>lua
+    {
+        "erl-koenig/theme-hub.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            -- Optional: for themes that use lush (will be notified if a theme requires it)
+            -- "rktjmp/lush.nvim"
+        },
+        config = function()
+            require("theme-hub").setup({
+                -- Configuration options (see below)
+            })
+        end,
+    }
+<
+
+
+USAGE                                          *theme-hub-themehub.nvim-usage*
+
+- `:ThemeHub` - Open the theme selector to browse and install all available themes
+- `:ThemeHub install <name>` - Install a specific theme
+- `:ThemeHub uninstall <name>` - Uninstall a specific theme
+- `:ThemeHub uninstall-all` - Uninstall all themes
+- `:ThemeHub clear-persistent` - Clear the saved persistent theme (auto-clears after uninstalling)
+
+After installation it will apply the theme automatically. It will use the first
+variant of the theme.
+
+
+CONFIGURATION                          *theme-hub-themehub.nvim-configuration*
+
+**Important:** You must call `setup()` to initialize the plugin.
+
+
+DEFAULT CONFIGURATION ~
+
+>lua
+    require("theme-hub").setup({
+        install_dir = vim.fn.stdpath("data") .. "/theme-hub",
+        auto_install_on_select = true,
+        apply_after_install = true,
+        persistent = false,
+    })
+<
+
+
+CONFIGURATION OPTIONS ~
+
+  ---------------------------------------------------------------------------------------------
+  Option                   Type      Default                     Description
+  ------------------------ --------- --------------------------- ------------------------------
+  install_dir              string    stdpath("data")/theme-hub   Directory where themes are
+                                                                 installed
+
+  auto_install_on_select   boolean   true                        Auto-install themes when
+                                                                 selected in browser
+
+  apply_after_install      boolean   true                        Auto-apply theme after
+                                                                 installation
+
+  persistent               boolean   false                       Remember last applied theme
+                                                                 across restarts
+  ---------------------------------------------------------------------------------------------
+
+TELESCOPE INTEGRATION ~
+
+This plugin uses `vim.ui.select` to display themes. For the best experience,
+use it with a telescope-like plugin: telescope.nvim, fzf-lua, snacks.picker,
+mini.pick, etc. Below is how to set it up with each one:
+
+
+TELESCOPE.NVIM
+
+>lua
+    -- Add to your telescope dependencies
+    dependencies = {
+        "nvim-telescope/telescope-ui-select.nvim",
+    }
+    
+    -- In your config call
+    require("telescope").load_extension("ui-select")
+<
+
+
+FZF-LUA
+
+Add this to your fzf-lua config:
+
+>lua
+    require("fzf-lua").register_ui_select({})
+<
+
+
+SNACKS.PICKER
+
+Works out of the box. No config needed.
+
+
+MINI.PICK
+
+In your mini config overwrite the default `vim.ui.select` with:
+
+>lua
+    vim.ui.select = MiniPick.ui_select
+<
+
+
+AVAILABLE THEMES                    *theme-hub-themehub.nvim-available-themes*
+
+See `lua/theme-hub/registry.lua` for the list of curated themes.
+
+
+REQUIREMENTS                            *theme-hub-themehub.nvim-requirements*
+
+- Neovim >= 0.7.0
+- Git (for cloning themes)
+- plenary.nvim <https://github.com/nvim-lua/plenary.nvim> (required)
+- lush.nvim <https://github.com/rktjmp/lush.nvim> (optional, for lush-based themes)
+
+
+OTHER                                          *theme-hub-themehub.nvim-other*
+
+- The plugin doesn’t consider themes that are installed via package managers.
+- If two themes have the exact same name, the plugin can’t distinguish them and will use one of them for both (very rare case)
+- Run `:checkhealth theme-hub` to ensure everything works correctly.
+- Run |theme-hub| to see the help documentation.
+
+
+SIMILAR PROJECTS                    *theme-hub-themehub.nvim-similar-projects*
+
+- huez.nvim <https://github.com/vague2k/huez.nvim>
+- pineapple <https://github.com/CWood-sdf/pineapple>
+
+
+CONTRIBUTE                                *theme-hub-themehub.nvim-contribute*
+
+Feel free to add new themes to the registry, or open issues for feature
+requests.
+
+==============================================================================
+2. Links                                                     *theme-hub-links*
+
+1. *demo*: ./assets/demo.gif
+
+Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
+
+vim:tw=78:ts=8:noet:ft=help:norl:
