@@ -115,13 +115,6 @@ return {
 	},
 	{
 		name = "nord",
-		repo = "shaunsingh/nord.nvim",
-		description = "Neovim theme based off of the Nord Color Palette, written in lua with tree sitter support ",
-		tags = { "dark", "cool" },
-		install_path = "nord.nvim",
-	},
-	{
-		name = "nord",
 		repo = "gbprod/nord.nvim",
 		description = "An arctic, north-bluish clean and elegant Neovim theme.",
 		tags = { "dark", "cool" },
