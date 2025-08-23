@@ -10,7 +10,7 @@ end
 
 local function finalize_installation(theme, install_path)
 	vim.opt.runtimepath:append(install_path)
-	
+
 	hub.add_installed_theme({
 		name = theme.name,
 		install_path = theme.install_path or theme.name,
@@ -70,7 +70,10 @@ function M.install(theme)
 						finalize_installation(theme, install_path)
 					else
 						cleanup_temp_dir(temp_path)
-						vim.notify("Failed to install " .. theme.name .. ": Could not move to final location", vim.log.levels.ERROR)
+						vim.notify(
+							"Failed to install " .. theme.name .. ": Could not move to final location",
+							vim.log.levels.ERROR
+						)
 					end
 				end)
 			else
@@ -120,7 +123,13 @@ function M.uninstall(theme_name, silent)
 	-- remove directory
 	local install_path = hub.config.install_dir .. "/" .. theme_to_remove.install_path
 	if vim.fn.isdirectory(install_path) == 1 then
-		vim.fn.delete(install_path, "rf")
+		local success = vim.fn.delete(install_path, "rf") == 0
+		if success then
+			vim.opt.runtimepath:remove(install_path)
+		else
+			vim.notify("Failed to delete directory for: " .. theme_name, vim.log.levels.ERROR)
+			return
+		end
 	end
 
 	local new_installed_themes = vim.tbl_filter(function(theme)
