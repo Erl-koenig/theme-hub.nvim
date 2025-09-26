@@ -1,4 +1,4 @@
-*theme-hub.txt*         For Neovim >= 0.7.0        Last change: 2025 August 23
+*theme-hub.txt*       For Neovim >= 0.7.0       Last change: 2025 September 26
 
 ==============================================================================
 Table of Contents                                *theme-hub-table-of-contents*
@@ -24,13 +24,13 @@ colorschemes from a curated list.
 
 FEATURES                                    *theme-hub-themehub.nvim-features*
 
-- **Curated Collection**70+ most popular themes for neovim
-- **One-Click Installation**Automatically clone and set up themes from GitHub
-- **Telescope Pickers Integration**Works seamlessly with telescope.nvim, fzf-lua, snacks.picker, mini.pick, and more
-- **Persistent Themes**Remember your theme across Neovim sessions
-- **Variants support**Supports all variants of a theme
-- **Instantly apply**Applies themes directly after installation
-- **Easy Management**Install, uninstall, and manage themes with simple commands
+- **Curated Collection**: 70+ most popular themes for neovim
+- **One-Click Installation**: Automatically clone and set up themes from GitHub
+- **Telescope Pickers Integration**: Works seamlessly with telescope.nvim, fzf-lua, snacks.picker, mini.pick, and more
+- **Persistent Themes**: Remember your theme across Neovim sessions
+- **Variants support**: Supports all variants of a theme
+- **Instantly apply**: Applies themes directly after installation
+- **Easy Management**: Install, uninstall, and manage themes with simple commands
 
 
 INSTALLATION                            *theme-hub-themehub.nvim-installation*
