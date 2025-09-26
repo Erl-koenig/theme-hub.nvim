@@ -2,11 +2,11 @@ local M = {}
 
 M.config = {
 	install_dir = vim.fn.stdpath("data") .. "/theme-hub",
-	installed_file = vim.fn.stdpath("data") .. "/theme-hub/installed.json",
-	persistent_theme_file = vim.fn.stdpath("data") .. "/theme-hub/persistent_theme.txt",
 	auto_install_on_select = true,
 	apply_after_install = true,
 	persistent = false,
+	installed_file = nil,
+	persistent_theme_file = nil,
 }
 
 -- helpers
@@ -112,6 +112,9 @@ end
 
 function M.setup(opts)
 	M.config = vim.tbl_deep_extend("force", M.config, opts or {})
+	M.config.installed_file = M.config.install_dir .. "/installed.json"
+	M.config.persistent_theme_file = M.config.install_dir .. "/persistent_theme.txt"
+
 	vim.fn.mkdir(M.config.install_dir, "p")
 	load_installed_themes()
 	load_persistent_theme()
@@ -151,35 +154,37 @@ end
 function M.uninstall_all()
 	local installed_themes = M.get_installed_themes()
 	local count = #installed_themes
-  
+
 	if count == 0 then
-	  vim.notify("No themes installed", vim.log.levels.INFO)
-	  return
+		vim.notify("No themes installed", vim.log.levels.INFO)
+		return
 	end
-  
+
 	local max_display = 10
 	local shown = vim.list_slice(installed_themes, 1, max_display)
-	local display = vim.tbl_map(function(t) return "• " .. t.name end, shown)
-  
+	local display = vim.tbl_map(function(t)
+		return "• " .. t.name
+	end, shown)
+
 	if count > max_display then
-	  table.insert(display, string.format("• ... and %d more", count - max_display))
+		table.insert(display, string.format("• ... and %d more", count - max_display))
 	end
-  
+
 	local choice = vim.fn.confirm(
-	  string.format("Uninstall all %d themes?\n\n%s", count, table.concat(display, "\n")),
-	  "&Yes\n&No", 2
+		string.format("Uninstall all %d themes?\n\n%s", count, table.concat(display, "\n")),
+		"&Yes\n&No",
+		2
 	)
-  
+
 	if choice == 1 then
-	  local installer = require("theme-hub.installer")
-	  for _, theme in ipairs(installed_themes) do
-		installer.uninstall(theme.name, true)
-	  end
-	  vim.notify("Uninstalled " .. count .. " themes", vim.log.levels.INFO)
+		local installer = require("theme-hub.installer")
+		for _, theme in ipairs(installed_themes) do
+			installer.uninstall(theme.name, true)
+		end
+		vim.notify("Uninstalled " .. count .. " themes", vim.log.levels.INFO)
 	else
-	  vim.notify("Uninstall all cancelled", vim.log.levels.INFO)
+		vim.notify("Uninstall all cancelled", vim.log.levels.INFO)
 	end
-  end
-  
+end
 
 return M
