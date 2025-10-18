@@ -1,20 +1,17 @@
 local M = {}
+local Path = require("plenary.path")
 
 M.config = {
 	install_dir = vim.fn.stdpath("data") .. "/theme-hub",
 	auto_install_on_select = true,
 	apply_after_install = true,
 	persistent = false,
+	-- computed in setup(), do not set manually
 	installed_file = nil,
 	persistent_theme_file = nil,
 }
 
 -- helpers
-local function get_file_path(file_path)
-	local Path = require("plenary.path")
-	return Path:new(file_path)
-end
-
 local function get_themes()
 	return require("theme-hub.registry")
 end
@@ -60,7 +57,7 @@ end
 
 -- Public API
 function M.get_installed_themes()
-	local file = get_file_path(M.config.installed_file)
+	local file = Path:new(M.config.installed_file)
 	if not file:exists() then
 		return {}
 	end
@@ -71,12 +68,12 @@ function M.get_installed_themes()
 end
 
 function M.save_installed_themes(installed_themes)
-	local installed_file = get_file_path(M.config.installed_file)
+	local installed_file = Path:new(M.config.installed_file)
 	installed_file:write(vim.fn.json_encode(installed_themes), "w")
 end
 
 function M.get_persistent_theme()
-	local file = get_file_path(M.config.persistent_theme_file)
+	local file = Path:new(M.config.persistent_theme_file)
 	if not file:exists() then
 		return nil
 	end
@@ -90,12 +87,12 @@ function M.save_persistent_theme(theme_name)
 	if not M.config.persistent then
 		return
 	end
-	local persistent_file = get_file_path(M.config.persistent_theme_file)
+	local persistent_file = Path:new(M.config.persistent_theme_file)
 	persistent_file:write(theme_name, "w")
 end
 
 function M.clear_persistent_theme()
-	local persistent_file = get_file_path(M.config.persistent_theme_file)
+	local persistent_file = Path:new(M.config.persistent_theme_file)
 	if persistent_file:exists() then
 		persistent_file:rm()
 	end
@@ -111,7 +108,7 @@ function M.add_installed_theme(theme_data)
 end
 
 function M.setup(opts)
-	M.config = vim.tbl_deep_extend("force", M.config, opts or {})
+	M.config = vim.tbl_deep_extend("force", M.config, opts or {}) -- merge user opts
 	M.config.installed_file = M.config.install_dir .. "/installed.json"
 	M.config.persistent_theme_file = M.config.install_dir .. "/persistent_theme.txt"
 

@@ -5,7 +5,7 @@ local hub = require("theme-hub")
 local UI_CONSTANTS = {
 	PADDING_EXTRA = 2,
 	STATUS_INSTALLED = "✓",
-	STATUS_NOT_INSTALLED = "-"
+	STATUS_NOT_INSTALLED = "-",
 }
 
 local function show_installed_theme_actions(theme, themes)
