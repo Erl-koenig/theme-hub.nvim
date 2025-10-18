@@ -64,6 +64,9 @@ function M.get_installed_themes()
 	local ok, result = pcall(function()
 		return vim.fn.json_decode(file:read())
 	end)
+	if not ok then
+		vim.notify("Could not read installed themes file (file may be corrupted)", vim.log.levels.WARN)
+	end
 	return ok and result or {}
 end
 
@@ -80,6 +83,9 @@ function M.get_persistent_theme()
 	local ok, result = pcall(function()
 		return file:read():gsub("%s+", "") -- trim whitespace
 	end)
+	if not ok then
+		vim.notify("Could not read persistent theme file (file may be corrupted)", vim.log.levels.WARN)
+	end
 	return ok and result or nil
 end
 

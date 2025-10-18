@@ -1,5 +1,6 @@
 local M = {}
 local hub = require("theme-hub")
+local Job = require("plenary.job")
 
 -- helpers
 local function cleanup_temp_dir(path)
@@ -39,7 +40,6 @@ end
 
 -- Install a theme (git clone and add to runtimepath)
 function M.install(theme)
-	local Job = require("plenary.job")
 	local install_path = hub.config.install_dir .. "/" .. (theme.install_path or theme.name)
 	local temp_path = install_path .. ".tmp"
 
