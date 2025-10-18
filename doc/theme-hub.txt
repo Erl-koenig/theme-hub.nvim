@@ -1,4 +1,4 @@
-*theme-hub.txt*       For Neovim >= 0.7.0       Last change: 2025 September 26
+*theme-hub.txt*        For Neovim >= 0.7.0        Last change: 2025 October 18
 
 ==============================================================================
 Table of Contents                                *theme-hub-table-of-contents*
